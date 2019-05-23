@@ -669,8 +669,8 @@ if [ "$?" -ne "0" ]; then
     exit 1
 fi
 
-echo ${str_htmi_results} | xmllint --nonet --html --dropdtd --recover  --xpath "//tr[@style=\"font-size:12px;\"]/td[position()=2 or position()=6]/text()" - |
-    awk '{printf "%s%s",$0,NR%2?",":"\n"}' | sort -r -nt',' -k 2 > ${_txt_result}
+echo ${str_htmi_results} | xmllint --nonet --html --dropdtd --recover  --xpath "//tr[@style=\"font-size:12px;\"]/td[position()=2 or position()=3 or position()=6]/text()" - |
+    awk '{printf "%s%s",$0,NR%3?",":"\n"}' | sort -r -nt',' -k 3 > ${_txt_result}
 
 if [ "$?" -ne "0" ]; then
     echo "Error"
@@ -678,7 +678,7 @@ if [ "$?" -ne "0" ]; then
 else
     echo "Ok"
 fi
-echo "=============================================="
+echo "================================================================================"
 echo ${str_constituency}
-echo "=============================================="
-cat ${_txt_result} | awk -F , '{printf "%2s:%-20s %s\n",NR,$1,$2}'
+echo "================================================================================"
+cat ${_txt_result} | awk -F , '{printf "%2s:%-30s %-40s %-10s\n",NR,$1,$2,$3}'
